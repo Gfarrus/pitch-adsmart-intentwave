@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdSmart × IntentWave — Strategic Partnership</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0A1628;
+    --azure: #4A9EE8;
+    --orange: #F97316;
+    --white: #FFFFFF;
+    --muted: #8A9BB5;
+    --border: rgba(74,158,232,0.15);
+    --light-bg: rgba(255,255,255,0.03);
+  }
+  body {
+    background: #060D1A;
+    font-family: 'Inter', sans-serif;
+    padding: 32px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .nav {
+    display: flex;
+    gap: 6px;
+  }
+  .nav button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .nav button.active, .nav button:hover {
+    background: rgba(74,158,232,0.12);
+    border-color: var(--azure);
+    color: var(--white);
+  }
+  .slide {
+    width: 1100px;
+    max-width: 100%;
+    min-height: 560px;
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 52px 60px 44px;
+    position: relative;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+  }
+  .slide.active { display: flex; }
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--orange);
+  }
+  .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--orange) 0%, var(--azure) 60%, transparent 100%);
+  }
+
+  /* LOGOS */
+  .logos-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .logo-iw img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+  .logo-sep {
+    width: 1px;
+    height: 24px;
+    background: rgba(255,255,255,0.2);
+  }
+  .logo-as {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 0.06em;
+  }
+  .logo-as span { color: var(--orange); }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 38px;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+  .label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--azure);
+    margin-bottom: 14px;
+  }
+  p { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.7; }
+  .card {
+    background: var(--light-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 26px;
+  }
+
+  /* ICONS — SVG line style */
+  .icon-wrap {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(74,158,232,0.25);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+  }
+  .icon-wrap svg {
+    width: 20px; height: 20px;
+    stroke: rgba(138,155,181,0.7);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .slide-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .slide-footer .tagline {
+    font-size: 10px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .slide-num { font-size: 11px; color: var(--muted); font-weight: 500; }
+
+  /* ── SLIDE 1 ── */
+  #s1 { justify-content: space-between; }
+  #s1 .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px 0 24px; }
+  #s1 .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--azure); margin-bottom: 18px;
+  }
+  #s1 h1 { font-size: 54px; line-height: 1; }
+  #s1 h1 em { font-style: normal; color: var(--orange); }
+  #s1 .divider { width: 44px; height: 3px; background: var(--orange); margin: 22px 0; }
+  #s1 .subtitle { font-size: 17px; color: var(--muted); font-weight: 300; line-height: 1.5; max-width: 520px; }
+  #s1 .cover-meta { font-size: 12px; color: var(--muted); margin-top: 28px; }
+  #s1 .cover-meta strong { color: var(--white); font-weight: 600; }
+
+  /* ── SLIDE 2 ── */
+  #s2 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+  #s2 .card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px; font-weight: 700; color: var(--azure);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  #s2 .highlight-box {
+    background: linear-gradient(135deg, rgba(249,115,22,0.07), rgba(74,158,232,0.05));
+    border: 1px solid rgba(249,115,22,0.2);
+    border-radius: 6px; padding: 16px 22px;
+  }
+  #s2 .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.82); font-style: italic; }
+  #s2 .highlight-box p strong { color: var(--orange); font-style: normal; }
+
+  /* ── SLIDE 3 ── */
+  #s3 .cred-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  #s3 .cred-card { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px 20px; }
+  #s3 .cred-card h3 {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+  }
+  #s3 .cred-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  #s3 .quote-box {
+    border-left: 3px solid var(--azure);
+    background: rgba(74,158,232,0.05);
+    padding: 14px 20px; border-radius: 0 6px 6px 0;
+  }
+  #s3 .quote-box p { font-size: 14px; color: rgba(255,255,255,0.78); font-style: italic; line-height: 1.6; }
+
+  /* ── SLIDE 4 ── */
+  #s4 .phases { display: flex; gap: 14px; margin-bottom: 22px; }
+  #s4 .phase {
+    flex: 1; background: var(--light-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 20px 18px; position: relative;
+  }
+  #s4 .phase-num {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900;
+    color: rgba(74,158,232,0.1); position: absolute; top: 10px; right: 14px; line-height: 1;
+  }
+  #s4 .phase-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azure); margin-bottom: 6px; }
+  #s4 .phase h3 {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700;
+    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  #s4 .phase ul { list-style: none; padding: 0; }
+  #s4 .phase ul li {
+    font-size: 12px; color: var(--muted); line-height: 1.6;
+    padding-left: 12px; position: relative; margin-bottom: 3px;
+  }
+  #s4 .phase ul li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; top: 3px; }
+  #s4 .phase-dur { margin-top: 12px; font-size: 10px; font-weight: 700; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; }
+  #s4 .roles-box {
+    background: rgba(74,158,232,0.05); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 22px; display: flex; gap: 36px; align-items: flex-start;
+  }
+  #s4 .role h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--azure); margin-bottom: 5px; }
+  #s4 .role p { font-size: 13px; color: rgba(255,255,255,0.62); line-height: 1.5; }
+  #s4 .role strong { color: var(--white); }
+  #s4 .role-div { width: 1px; background: var(--border); align-self: stretch; }
+
+  /* ── SLIDE 5 ── */
+  #s5 .inv-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; margin-bottom: 20px; }
+  #s5 table { width: 100%; border-collapse: collapse; }
+  #s5 table tr { border-bottom: 1px solid var(--border); }
+  #s5 table tr:last-child { border-bottom: none; }
+  #s5 table td { padding: 12px 0; font-size: 13px; color: rgba(255,255,255,0.68); vertical-align: top; line-height: 1.4; }
+  #s5 table td:first-child { font-weight: 600; color: var(--white); width: 52%; padding-right: 12px; }
+  #s5 table td:last-child { text-align: right; }
+  .price-main { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--orange); letter-spacing: 0.02em; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 3px; letter-spacing: 0.05em; }
+  .tag-blue { background: rgba(74,158,232,0.15); color: var(--azure); }
+  .tag-gray { background: rgba(255,255,255,0.07); color: var(--muted); }
+  .tag-green { background: rgba(74,222,128,0.1); color: #4ADE80; }
+  .note-sm { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+  #s5 .next-box {
+    background: rgba(74,158,232,0.05); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 22px;
+  }
+  #s5 .next-box p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  #s5 .next-box strong { color: var(--white); }
+
+  /* Right column slide 5 */
+  #s5 .details-card {
+    background: var(--light-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  #s5 .detail-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  #s5 .detail-row:last-child { border-bottom: none; }
+  #s5 .dr-icon svg { width: 16px; height: 16px; stroke: rgba(138,155,181,0.6); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; }
+  #s5 .dr-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; flex: 1; }
+  #s5 .dr-text strong { color: rgba(255,255,255,0.9); display: block; font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button class="active" onclick="goTo(1)">01 · Cover</button>
+  <button onclick="goTo(2)">02 · What We See</button>
+  <button onclick="goTo(3)">03 · What I Bring</button>
+  <button onclick="goTo(4)">04 · How We Work</button>
+  <button onclick="goTo(5)">05 · Investment</button>
+</div>
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="s1">
+  <div class="slide-header">
+    <div class="logos-bar">
+      <div class="logo-iw">
+        <img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span style="display:none;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:white;letter-spacing:.05em;">IntentWave</span>
+      </div>
+      <div class="logo-sep"></div>
+      <div class="logo-as">AdSmart<span>·</span></div>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="eyebrow">Strategic Partnership Proposal · 2026</div>
+    <h1>Growing<br><em>IntentWave</em><br>Together.</h1>
+    <div class="divider"></div>
+    <p class="subtitle">A focused engagement to unlock the full commercial potential of a technology that the US market needs now.</p>
+    <div class="cover-meta">
+      Prepared by <strong>Gonzalo Farrus</strong> — Founder & CEO, AdSmart<br>
+      <span style="margin-top:4px;display:block;">For <strong>Jess & Peter</strong> · IntentWave · June 2026</span>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
+    <div class="tagline">Machine Results. Delivered.</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide" id="s2">
+  <div class="slide-header">
+    <h1>What We See<br>in IntentWave</h1>
+    <div class="logos-bar">
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-sep"></div>
+      <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>
+      <h3>Real Technology</h3>
+      <p>Contact-level visitor identification with retargeting across Google, Meta, TikTok and LinkedIn — with consent compliance built in. This is precisely what brands need as cookie-based targeting deteriorates.</p>
+    </div>
+    <div class="card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Proven Results</h3>
+      <p>Real outcomes across verticals: eCommerce, home services, financial services. The platform integrates with HubSpot, GoHighLevel, Klaviyo and 1,000+ tools. A solid foundation ready to scale.</p>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <p>IntentWave has <strong>the right product at the right moment.</strong> What it needs now is a focused commercial strategy to match the quality of its technology — and grow the client base with confidence and precision.</p>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
+    <div class="tagline">Machine Results. Delivered.</div>
+    <div class="slide-num">02 / 05</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide" id="s3">
+  <div class="slide-header">
+    <h1>What I Bring<br>to the Table</h1>
+    <div class="logos-bar">
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-sep"></div>
+      <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
+    </div>
+  </div>
+  <div class="cred-grid">
+    <div class="cred-card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <h3>20+ Years Programmatic</h3>
+      <p>Pioneer in data-driven advertising since 2007. IAB USA Certified Programmatic Expert. Former DMP partner across LATAM.</p>
+    </div>
+    <div class="cred-card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h3>GTM Architecture</h3>
+      <p>Built commercial strategies for platforms expanding into new markets. Specialist in translating technical products into scalable revenue engines.</p>
+    </div>
+    <div class="cred-card">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <h3>C-Level Advisory</h3>
+      <p>Fractional CXO for SaaS and adtech platforms. Track record with AMEX, BBVA, Ford, HSBC, Turner and regional agencies.</p>
+    </div>
+  </div>
+  <div class="quote-box">
+    <p>"My role is not to replace what IntentWave does well — it's to build the commercial architecture around it so the technology finds the clients it deserves, at the price it's worth."</p>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
+    <div class="tagline">Machine Results. Delivered.</div>
+    <div class="slide-num">03 / 05</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide" id="s4">
+  <div class="slide-header">
+    <h1>How We<br>Work Together</h1>
+    <div class="logos-bar">
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-sep"></div>
+      <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
+    </div>
+  </div>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num">01</div>
+      <div class="phase-tag">Months 1–2</div>
+      <h3>Discovery & Assessment</h3>
+      <ul>
+        <li>Audit current client base & usage patterns</li>
+        <li>Define ICP and highest-LTV verticals</li>
+        <li>Competitive positioning vs RB2B, Warmly, Leadfeeder</li>
+        <li>Pricing & packaging opportunities</li>
+      </ul>
+      <div class="phase-dur">Deliverable: Strategic Roadmap</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">02</div>
+      <div class="phase-tag">Month 3+</div>
+      <h3>Commercial Execution</h3>
+      <ul>
+        <li>GTM strategy by vertical</li>
+        <li>Partner & agency channel activation</li>
+        <li>Sales narrative & pitch refinement</li>
+        <li>HubSpot pipeline structure & reporting</li>
+      </ul>
+      <div class="phase-dur">Deliverable: Active Growth Engine</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">03</div>
+      <div class="phase-tag">Ongoing</div>
+      <h3>Scale & Governance</h3>
+      <ul>
+        <li>Weekly strategic syncs with Jess & team</li>
+        <li>Onboarding & renewal workflow automation</li>
+        <li>Knowledge transfer to US sales team</li>
+        <li>Metrics review & strategy adjustment</li>
+      </ul>
+      <div class="phase-dur">Deliverable: Self-sustaining operation</div>
+    </div>
+  </div>
+  <div class="roles-box">
+    <div class="role">
+      <h4>Gonzalo · AdSmart</h4>
+      <p><strong>Strategic direction</strong> — business architecture, market analysis, C-level advisory, GTM design.</p>
+    </div>
+    <div class="role-div"></div>
+    <div class="role">
+      <h4>Jess · IntentWave</h4>
+      <p><strong>Operational control</strong> — CRM execution, team management, daily operations and client relationships.</p>
+    </div>
+  </div>
+  <div class="slide-footer">
+    <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
+    <div class="tagline">Machine Results. Delivered.</div>
+    <div class="slide-num">04 / 05</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide" id="s5">
+  <div class="slide-header">
+    <h1>Investment &<br>Next Steps</h1>
+    <div class="logos-bar">
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-sep"></div>
+      <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
+    </div>
+  </div>
+  <div class="inv-grid">
+    <div class="card">
+      <div class="label">Phase 1 — Discovery Engagement</div>
+      <table>
+        <tr>
+          <td>Monthly Retainer<span class="note-sm">Strategy & Business Architecture</span></td>
+          <td><span class="price-main">$2,500/mo</span></td>
+        </tr>
+        <tr>
+          <td>Initial Term<span class="note-sm">Non-cancellable discovery phase</span></td>
+          <td><span class="tag tag-gray">2 months</span></td>
+        </tr>
+        <tr>
+          <td>Total Phase 1 Investment</td>
+          <td><span class="tag tag-green">$5,000</span></td>
+        </tr>
+        <tr>
+          <td>Travel & On-site Visits<span class="note-sm">Flights & lodging, US visits</span></td>
+          <td><span class="tag tag-blue">Covered by Client</span></td>
+        </tr>
+        <tr>
+          <td>Modality<span class="note-sm">Weekly syncs + async Slack</span></td>
+          <td><span class="tag tag-gray">Virtual-first</span></td>
+        </tr>
+      </table>
+      <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.6;">After Phase 1, we define the ongoing partnership together — based on results and aligned goals.</div>
+    </div>
+
+    <div class="details-card">
+      <div class="label" style="margin-bottom:4px;">What Phase 1 delivers</div>
+      <div class="detail-row">
+        <div class="dr-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div class="dr-text"><strong>Strategic Roadmap</strong>Delivered in 60 days — clear commercial direction, ICP, pricing, and GTM priorities.</div>
+      </div>
+      <div class="detail-row">
+        <div class="dr-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="dr-text"><strong>Fast time-to-value</strong>First recommendations within the first two weeks of engagement.</div>
+      </div>
+      <div class="detail-row">
+        <div class="dr-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <div class="dr-text"><strong>No long-term risk</strong>No commitment beyond Phase 1 until results are proven and both sides agree on next steps.</div>
+      </div>
+      <div class="detail-row">
+        <div class="dr-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="dr-text"><strong>Aligned incentives</strong>My success is tied to IntentWave's growth — this is a partnership, not a vendor relationship.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-box">
+    <p>I'd love to start with a working session with you and Peter to align on priorities. <strong>By day 60, IntentWave has a clear commercial strategy and a concrete plan to execute it.</strong></p>
+  </div>
+
+  <div class="slide-footer">
+    <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
+    <div class="tagline">Machine Results. Delivered.</div>
+    <div class="slide-num">05 / 05</div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>
+
+<script>
+  function goTo(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('s' + n).classList.add('active');
+    document.querySelectorAll('.nav button')[n-1].classList.add('active');
+  }
+</script>
+</body>
+</html>
