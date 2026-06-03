@@ -5,281 +5,248 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AdSmart × IntentWave — Strategic Partnership</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --navy: #0A1628;
-    --azure: #4A9EE8;
-    --orange: #F97316;
-    --white: #FFFFFF;
-    --muted: #8A9BB5;
-    --border: rgba(74,158,232,0.15);
-    --light-bg: rgba(255,255,255,0.03);
-  }
-  body {
-    background: #060D1A;
-    font-family: 'Inter', sans-serif;
-    padding: 32px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-  .nav {
-    display: flex;
-    gap: 6px;
-  }
-  .nav button {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: all 0.2s;
-  }
-  .nav button.active, .nav button:hover {
-    background: rgba(74,158,232,0.12);
-    border-color: var(--azure);
-    color: var(--white);
-  }
-  .slide {
-    width: 1100px;
-    max-width: 100%;
-    min-height: 560px;
-    background: var(--navy);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 52px 60px 44px;
-    position: relative;
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-  }
-  .slide.active { display: flex; }
-  .slide::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--orange);
-  }
-  .bottom-bar {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--orange) 0%, var(--azure) 60%, transparent 100%);
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0A1628;
+  --azure: #4A9EE8;
+  --orange: #F97316;
+  --white: #FFFFFF;
+  --muted: #8A9BB5;
+  --border: rgba(74,158,232,0.15);
+  --light-bg: rgba(255,255,255,0.03);
+}
+html, body {
+  background: #060D1A;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+body {
+  padding: 24px 16px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 
-  /* LOGOS */
-  .logos-bar {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .logo-iw img {
-    height: 32px;
-    width: auto;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
-  }
-  .logo-sep {
-    width: 1px;
-    height: 24px;
-    background: rgba(255,255,255,0.2);
-  }
-  .logo-as {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 20px;
-    color: var(--white);
-    letter-spacing: 0.06em;
-  }
-  .logo-as span { color: var(--orange); }
+/* NAV */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+}
+.nav button {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav button.active, .nav button:hover {
+  background: rgba(74,158,232,0.12);
+  border-color: var(--azure);
+  color: var(--white);
+}
 
-  .slide-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 40px;
-  }
-  h1 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 38px;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    line-height: 1;
-  }
-  .label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--azure);
-    margin-bottom: 14px;
-  }
-  p { font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.7; }
-  .card {
-    background: var(--light-bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 22px 26px;
-  }
+/* SLIDE */
+.slide {
+  width: 100%;
+  max-width: 1100px;
+  min-height: clamp(480px, 60vw, 580px);
+  background: var(--navy);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: clamp(28px, 5vw, 52px) clamp(24px, 5.5vw, 60px) clamp(24px, 4vw, 44px);
+  position: relative;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--orange);
+}
+.bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--orange) 0%, var(--azure) 60%, transparent 100%);
+}
 
-  /* ICONS — SVG line style */
-  .icon-wrap {
-    width: 40px; height: 40px;
-    border: 1px solid rgba(74,158,232,0.25);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    flex-shrink: 0;
-  }
-  .icon-wrap svg {
-    width: 20px; height: 20px;
-    stroke: rgba(138,155,181,0.7);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+/* LOGOS */
+.logos-bar { display: flex; align-items: center; gap: 14px; }
+.logo-iw img { height: clamp(20px, 3vw, 30px); width: auto; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+.logo-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.2); }
+.logo-as { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(15px, 2vw, 20px); color: var(--white); letter-spacing: 0.06em; }
+.logo-as span { color: var(--orange); }
 
-  .slide-footer {
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .slide-footer .tagline {
-    font-size: 10px;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  .slide-num { font-size: 11px; color: var(--muted); font-weight: 500; }
+.slide-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: clamp(24px, 4vw, 40px); gap: 16px; }
+h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(26px, 4vw, 38px); color: var(--white); text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; }
+.label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--azure); margin-bottom: 12px; }
+p { font-size: clamp(12px, 1.4vw, 14px); color: rgba(255,255,255,0.72); line-height: 1.7; }
+.card { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: clamp(16px, 2.5vw, 22px) clamp(16px, 2.5vw, 26px); }
 
-  /* ── SLIDE 1 ── */
-  #s1 { justify-content: space-between; }
-  #s1 .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 16px 0 24px; }
-  #s1 .eyebrow {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--azure); margin-bottom: 18px;
-  }
-  #s1 h1 { font-size: 54px; line-height: 1; }
-  #s1 h1 em { font-style: normal; color: var(--orange); }
-  #s1 .divider { width: 44px; height: 3px; background: var(--orange); margin: 22px 0; }
-  #s1 .subtitle { font-size: 17px; color: var(--muted); font-weight: 300; line-height: 1.5; max-width: 520px; }
-  #s1 .cover-meta { font-size: 12px; color: var(--muted); margin-top: 28px; }
-  #s1 .cover-meta strong { color: var(--white); font-weight: 600; }
+/* ICONS */
+.icon-wrap { width: 36px; height: 36px; border: 1px solid rgba(74,158,232,0.25); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; flex-shrink: 0; }
+.icon-wrap svg { width: 18px; height: 18px; stroke: rgba(138,155,181,0.7); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-  /* ── SLIDE 2 ── */
-  #s2 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
-  #s2 .card h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 17px; font-weight: 700; color: var(--azure);
-    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
-  }
-  #s2 .highlight-box {
-    background: linear-gradient(135deg, rgba(249,115,22,0.07), rgba(74,158,232,0.05));
-    border: 1px solid rgba(249,115,22,0.2);
-    border-radius: 6px; padding: 16px 22px;
-  }
-  #s2 .highlight-box p { font-size: 14px; color: rgba(255,255,255,0.82); font-style: italic; }
-  #s2 .highlight-box p strong { color: var(--orange); font-style: normal; }
+.slide-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.slide-footer .tagline { font-size: 10px; color: rgba(255,255,255,0.18); letter-spacing: 0.12em; text-transform: uppercase; }
+.slide-num { font-size: 11px; color: var(--muted); font-weight: 500; }
 
-  /* ── SLIDE 3 ── */
-  #s3 .cred-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  #s3 .cred-card { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px 20px; }
-  #s3 .cred-card h3 {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
-    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
-  }
-  #s3 .cred-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
-  #s3 .quote-box {
-    border-left: 3px solid var(--azure);
-    background: rgba(74,158,232,0.05);
-    padding: 14px 20px; border-radius: 0 6px 6px 0;
-  }
-  #s3 .quote-box p { font-size: 14px; color: rgba(255,255,255,0.78); font-style: italic; line-height: 1.6; }
+/* ── S1 COVER ── */
+#s1 { justify-content: space-between; }
+#s1 .cover-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 12px 0 20px; }
+#s1 .eyebrow { font-size: clamp(9px,1.2vw,11px); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--azure); margin-bottom: 16px; }
+#s1 h1 { font-size: clamp(32px, 6vw, 54px); line-height: 1; }
+#s1 h1 em { font-style: normal; color: var(--orange); }
+#s1 .divider { width: 40px; height: 3px; background: var(--orange); margin: 18px 0; }
+#s1 .subtitle { font-size: clamp(13px,1.8vw,17px); color: var(--muted); font-weight: 300; line-height: 1.5; max-width: 520px; }
+#s1 .cover-meta { font-size: clamp(11px,1.3vw,13px); color: var(--muted); margin-top: 24px; line-height: 1.8; }
+#s1 .cover-meta strong { color: var(--white); font-weight: 600; }
 
-  /* ── SLIDE 4 ── */
-  #s4 .phases { display: flex; gap: 14px; margin-bottom: 22px; }
-  #s4 .phase {
-    flex: 1; background: var(--light-bg); border: 1px solid var(--border);
-    border-radius: 6px; padding: 20px 18px; position: relative;
-  }
-  #s4 .phase-num {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900;
-    color: rgba(74,158,232,0.1); position: absolute; top: 10px; right: 14px; line-height: 1;
-  }
-  #s4 .phase-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azure); margin-bottom: 6px; }
-  #s4 .phase h3 {
-    font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700;
-    color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
-  }
-  #s4 .phase ul { list-style: none; padding: 0; }
-  #s4 .phase ul li {
-    font-size: 12px; color: var(--muted); line-height: 1.6;
-    padding-left: 12px; position: relative; margin-bottom: 3px;
-  }
-  #s4 .phase ul li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; top: 3px; }
-  #s4 .phase-dur { margin-top: 12px; font-size: 10px; font-weight: 700; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; }
-  #s4 .roles-box {
-    background: rgba(74,158,232,0.05); border: 1px solid var(--border);
-    border-radius: 6px; padding: 14px 22px; display: flex; gap: 36px; align-items: flex-start;
-  }
-  #s4 .role h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--azure); margin-bottom: 5px; }
-  #s4 .role p { font-size: 13px; color: rgba(255,255,255,0.62); line-height: 1.5; }
-  #s4 .role strong { color: var(--white); }
-  #s4 .role-div { width: 1px; background: var(--border); align-self: stretch; }
+/* ── S2 ── */
+#s2 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+#s2 .card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(14px,1.8vw,17px); font-weight: 700; color: var(--azure); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+#s2 .highlight-box { background: linear-gradient(135deg,rgba(249,115,22,0.07),rgba(74,158,232,0.05)); border: 1px solid rgba(249,115,22,0.2); border-radius: 6px; padding: 14px 20px; }
+#s2 .highlight-box p { font-size: clamp(12px,1.4vw,14px); color: rgba(255,255,255,0.82); font-style: italic; }
+#s2 .highlight-box p strong { color: var(--orange); font-style: normal; }
 
-  /* ── SLIDE 5 ── */
-  #s5 .inv-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; margin-bottom: 20px; }
-  #s5 table { width: 100%; border-collapse: collapse; }
-  #s5 table tr { border-bottom: 1px solid var(--border); }
-  #s5 table tr:last-child { border-bottom: none; }
-  #s5 table td { padding: 12px 0; font-size: 13px; color: rgba(255,255,255,0.68); vertical-align: top; line-height: 1.4; }
-  #s5 table td:first-child { font-weight: 600; color: var(--white); width: 52%; padding-right: 12px; }
-  #s5 table td:last-child { text-align: right; }
-  .price-main { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--orange); letter-spacing: 0.02em; }
-  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 3px; letter-spacing: 0.05em; }
-  .tag-blue { background: rgba(74,158,232,0.15); color: var(--azure); }
-  .tag-gray { background: rgba(255,255,255,0.07); color: var(--muted); }
-  .tag-green { background: rgba(74,222,128,0.1); color: #4ADE80; }
-  .note-sm { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
-  #s5 .next-box {
-    background: rgba(74,158,232,0.05); border: 1px solid var(--border);
-    border-radius: 6px; padding: 14px 22px;
-  }
-  #s5 .next-box p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
-  #s5 .next-box strong { color: var(--white); }
+/* ── S3 ── */
+#s3 .cred-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+#s3 .cred-card { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: clamp(14px,2vw,18px) clamp(14px,2vw,20px); }
+#s3 .cred-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(13px,1.6vw,15px); font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+#s3 .cred-card p { font-size: clamp(11px,1.3vw,13px); color: var(--muted); line-height: 1.55; }
+#s3 .quote-box { border-left: 3px solid var(--azure); background: rgba(74,158,232,0.05); padding: 12px 18px; border-radius: 0 6px 6px 0; }
+#s3 .quote-box p { font-size: clamp(12px,1.4vw,14px); color: rgba(255,255,255,0.78); font-style: italic; line-height: 1.6; }
 
-  /* Right column slide 5 */
-  #s5 .details-card {
-    background: var(--light-bg); border: 1px solid var(--border);
-    border-radius: 6px; padding: 22px 24px;
-    display: flex; flex-direction: column; gap: 0;
-  }
-  #s5 .detail-row {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  #s5 .detail-row:last-child { border-bottom: none; }
-  #s5 .dr-icon svg { width: 16px; height: 16px; stroke: rgba(138,155,181,0.6); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; }
-  #s5 .dr-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; flex: 1; }
-  #s5 .dr-text strong { color: rgba(255,255,255,0.9); display: block; font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+/* ── S4 ── */
+#s4 .phases { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+#s4 .phase { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: clamp(14px,2vw,20px) clamp(14px,2vw,18px); position: relative; }
+#s4 .phase-num { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 900; color: rgba(74,158,232,0.1); position: absolute; top: 8px; right: 12px; line-height: 1; }
+#s4 .phase-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--azure); margin-bottom: 5px; }
+#s4 .phase h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(14px,1.8vw,17px); font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+#s4 .phase ul { list-style: none; padding: 0; }
+#s4 .phase ul li { font-size: clamp(11px,1.2vw,12px); color: var(--muted); line-height: 1.6; padding-left: 12px; position: relative; margin-bottom: 3px; }
+#s4 .phase ul li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; top: 3px; }
+#s4 .phase-dur { margin-top: 10px; font-size: 10px; font-weight: 700; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; }
+#s4 .roles-box { background: rgba(74,158,232,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 12px 20px; display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+#s4 .role h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--azure); margin-bottom: 4px; }
+#s4 .role p { font-size: clamp(11px,1.3vw,13px); color: rgba(255,255,255,0.62); line-height: 1.5; }
+#s4 .role strong { color: var(--white); }
+#s4 .role-div { width: 1px; background: var(--border); align-self: stretch; }
+
+/* ── S5 ── */
+#s5 .inv-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; margin-bottom: 16px; }
+#s5 table { width: 100%; border-collapse: collapse; }
+#s5 table tr { border-bottom: 1px solid var(--border); }
+#s5 table tr:last-child { border-bottom: none; }
+#s5 table td { padding: 10px 0; font-size: clamp(11px,1.3vw,13px); color: rgba(255,255,255,0.68); vertical-align: top; line-height: 1.4; }
+#s5 table td:first-child { font-weight: 600; color: var(--white); width: 52%; padding-right: 10px; }
+#s5 table td:last-child { text-align: right; }
+.price-main { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(20px,2.5vw,26px); font-weight: 900; color: var(--orange); letter-spacing: 0.02em; }
+.tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 3px 7px; border-radius: 3px; letter-spacing: 0.05em; }
+.tag-blue { background: rgba(74,158,232,0.15); color: var(--azure); }
+.tag-gray { background: rgba(255,255,255,0.07); color: var(--muted); }
+.tag-green { background: rgba(74,222,128,0.1); color: #4ADE80; }
+.note-sm { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+#s5 .details-card { background: var(--light-bg); border: 1px solid var(--border); border-radius: 6px; padding: clamp(16px,2vw,22px) clamp(16px,2vw,24px); display: flex; flex-direction: column; }
+#s5 .detail-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+#s5 .detail-row:last-child { border-bottom: none; }
+#s5 .dr-icon svg { width: 15px; height: 15px; stroke: rgba(138,155,181,0.6); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; flex-shrink: 0; }
+#s5 .dr-text { font-size: clamp(11px,1.3vw,13px); color: rgba(255,255,255,0.65); line-height: 1.5; flex: 1; }
+#s5 .dr-text strong { color: rgba(255,255,255,0.9); display: block; font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+#s5 .next-box { background: rgba(74,158,232,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 12px 20px; }
+#s5 .next-box p { font-size: clamp(12px,1.4vw,13px); color: rgba(255,255,255,0.7); line-height: 1.6; }
+#s5 .next-box strong { color: var(--white); }
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media (max-width: 700px) {
+  #s2 .two-col { grid-template-columns: 1fr; }
+  #s3 .cred-grid { grid-template-columns: 1fr; }
+  #s4 .phases { grid-template-columns: 1fr; }
+  #s5 .inv-grid { grid-template-columns: 1fr; }
+  #s4 .role-div { display: none; }
+  .slide-header { flex-direction: column; gap: 12px; }
+  h1 { font-size: 28px; }
+}
+@media (max-width: 480px) {
+  .nav button { font-size: 10px; padding: 5px 8px; }
+  #s1 h1 { font-size: 36px; }
+}
+
+/* ── FLOATING ACTION BAR ── */
+.fab-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  background: rgba(10,22,40,0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(74,158,232,0.1);
+  border-radius: 50px;
+  padding: 5px 10px;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.fab-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.fab-btn:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+.fab-btn.orange:hover { color: var(--orange); }
+.fab-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.fab-btn .spinner { width: 11px; height: 11px; border: 1.5px solid rgba(255,255,255,0.2); border-top-color: var(--azure); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+  background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3);
+  color: #4ADE80; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+  padding: 10px 20px; border-radius: 50px; z-index: 200;
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* PRINT */
+@media print {
+  .nav, .fab-bar, .toast { display: none !important; }
+  body { background: #0A1628; padding: 0; }
+  .slide { display: flex !important; page-break-after: always; max-width: 100%; min-height: 100vh; border-radius: 0; border: none; }
+}
 </style>
 </head>
 <body>
@@ -292,14 +259,11 @@
   <button onclick="goTo(5)">05 · Investment</button>
 </div>
 
-<!-- SLIDE 1 -->
+<!-- S1 -->
 <div class="slide active" id="s1">
   <div class="slide-header">
     <div class="logos-bar">
-      <div class="logo-iw">
-        <img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <span style="display:none;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:white;letter-spacing:.05em;">IntentWave</span>
-      </div>
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" onerror="this.style.display='none'"></div>
       <div class="logo-sep"></div>
       <div class="logo-as">AdSmart<span>·</span></div>
     </div>
@@ -311,7 +275,7 @@
     <p class="subtitle">A focused engagement to unlock the full commercial potential of a technology that the US market needs now.</p>
     <div class="cover-meta">
       Prepared by <strong>Gonzalo Farrus</strong> — Founder & CEO, AdSmart<br>
-      <span style="margin-top:4px;display:block;">For <strong>Jess & Peter</strong> · IntentWave · June 2026</span>
+      For <strong>Jess</strong> · IntentWave · June 2026
     </div>
   </div>
   <div class="slide-footer">
@@ -321,28 +285,24 @@
   <div class="bottom-bar"></div>
 </div>
 
-<!-- SLIDE 2 -->
+<!-- S2 -->
 <div class="slide" id="s2">
   <div class="slide-header">
     <h1>What We See<br>in IntentWave</h1>
     <div class="logos-bar">
-      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:24px;" onerror="this.style.display='none'"></div>
       <div class="logo-sep"></div>
       <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
     </div>
   </div>
   <div class="two-col">
     <div class="card">
-      <div class="icon-wrap">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      </div>
+      <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
       <h3>Real Technology</h3>
-      <p>Contact-level visitor identification with retargeting across Google, Meta, TikTok and LinkedIn — with consent compliance built in. This is precisely what brands need as cookie-based targeting deteriorates.</p>
+      <p>Contact-level visitor identification with retargeting across Google, Meta, TikTok and LinkedIn — with consent compliance built in. Precisely what brands need as cookie-based targeting deteriorates.</p>
     </div>
     <div class="card">
-      <div class="icon-wrap">
-        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      </div>
+      <div class="icon-wrap"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
       <h3>Proven Results</h3>
       <p>Real outcomes across verticals: eCommerce, home services, financial services. The platform integrates with HubSpot, GoHighLevel, Klaviyo and 1,000+ tools. A solid foundation ready to scale.</p>
     </div>
@@ -358,35 +318,29 @@
   <div class="bottom-bar"></div>
 </div>
 
-<!-- SLIDE 3 -->
+<!-- S3 -->
 <div class="slide" id="s3">
   <div class="slide-header">
     <h1>What I Bring<br>to the Table</h1>
     <div class="logos-bar">
-      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:24px;" onerror="this.style.display='none'"></div>
       <div class="logo-sep"></div>
       <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
     </div>
   </div>
   <div class="cred-grid">
     <div class="cred-card">
-      <div class="icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      </div>
+      <div class="icon-wrap"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
       <h3>Digital Business Strategy</h3>
       <p>20+ years in data-driven, ROI-focused digital business development. Specialist in platform technology strategy across adtech, SaaS and agency ecosystems.</p>
     </div>
     <div class="cred-card">
-      <div class="icon-wrap">
-        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
+      <div class="icon-wrap"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
       <h3>GTM Architecture</h3>
       <p>Data-driven GTM architect. Translates complex platform technology into measurable revenue — from ICP definition to pipeline activation.</p>
     </div>
     <div class="cred-card">
-      <div class="icon-wrap">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-      </div>
+      <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
       <h3>C-Level Advisory</h3>
       <p>Fractional CXO for SaaS and adtech platforms. Track record with AMEX, BBVA, Ford, HSBC, Turner and regional agencies.</p>
     </div>
@@ -402,12 +356,12 @@
   <div class="bottom-bar"></div>
 </div>
 
-<!-- SLIDE 4 -->
+<!-- S4 -->
 <div class="slide" id="s4">
   <div class="slide-header">
     <h1>How We<br>Work Together</h1>
     <div class="logos-bar">
-      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:24px;" onerror="this.style.display='none'"></div>
       <div class="logo-sep"></div>
       <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
     </div>
@@ -469,12 +423,12 @@
   <div class="bottom-bar"></div>
 </div>
 
-<!-- SLIDE 5 -->
+<!-- S5 -->
 <div class="slide" id="s5">
   <div class="slide-header">
     <h1>Investment &<br>Next Steps</h1>
     <div class="logos-bar">
-      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:26px;" onerror="this.style.display='none'"></div>
+      <div class="logo-iw"><img src="https://framerusercontent.com/images/IpdxqzjxzrPmA3r9mnsgR2pE4EM.png" alt="IntentWave" style="height:24px;" onerror="this.style.display='none'"></div>
       <div class="logo-sep"></div>
       <div class="logo-as" style="font-size:16px;">AdSmart<span>·</span></div>
     </div>
@@ -504,9 +458,8 @@
           <td><span class="tag tag-gray">Virtual-first</span></td>
         </tr>
       </table>
-      <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.6;">After Phase 1, we define the ongoing partnership together — based on results and aligned goals.</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--muted);line-height:1.6;">After Phase 1, we define the ongoing partnership together — based on results and aligned goals.</div>
     </div>
-
     <div class="details-card">
       <div class="label" style="margin-bottom:4px;">What Phase 1 delivers</div>
       <div class="detail-row">
@@ -527,11 +480,9 @@
       </div>
     </div>
   </div>
-
   <div class="next-box">
     <p>I'd love to start with a working session with you to align on priorities. <strong>By day 60, IntentWave has a clear commercial strategy and a concrete plan to execute it.</strong></p>
   </div>
-
   <div class="slide-footer">
     <div class="logo-as" style="font-size:13px;opacity:.3;">AdSmart<span>·</span></div>
     <div class="tagline">Machine Results. Delivered.</div>
@@ -540,12 +491,108 @@
   <div class="bottom-bar"></div>
 </div>
 
+<!-- FLOATING ACTION BAR -->
+<div class="fab-bar">
+  <button class="fab-btn" onclick="copyLink()">
+    <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+    Copy Link
+  </button>
+  <button class="fab-btn orange" onclick="downloadPDF()" id="pdfBtn">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+    Download PDF
+  </button>
+  <button class="fab-btn" onclick="downloadPNG()" id="pngBtn">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    Save PNG
+  </button>
+</div>
+
+<div class="toast" id="toast">Link copied to clipboard ✓</div>
+
 <script>
+  let current = 1;
+
   function goTo(n) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
     document.getElementById('s' + n).classList.add('active');
-    document.querySelectorAll('.nav button')[n-1].classList.add('active');
+    document.querySelectorAll('.nav button')[n - 1].classList.add('active');
+    current = n;
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => showToast('Link copied to clipboard ✓'))
+      .catch(() => {
+        const el = document.createElement('textarea');
+        el.value = window.location.href;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Link copied ✓');
+      });
+  }
+
+  async function downloadPDF() {
+    const btn = document.getElementById('pdfBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<div class="spinner"></div> Generating...';
+    btn.disabled = true;
+
+    try {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1100, 620] });
+      const slides = [1, 2, 3, 4, 5];
+
+      for (let i = 0; i < slides.length; i++) {
+        goTo(slides[i]);
+        await new Promise(r => setTimeout(r, 300));
+        const el = document.getElementById('s' + slides[i]);
+        const canvas = await html2canvas(el, { scale: 1.5, backgroundColor: '#0A1628', useCORS: true, logging: false });
+        const img = canvas.toDataURL('image/jpeg', 0.92);
+        if (i > 0) pdf.addPage();
+        pdf.addImage(img, 'JPEG', 0, 0, 1100, 620);
+      }
+
+      pdf.save('AdSmart-IntentWave-Proposal.pdf');
+      goTo(current);
+      showToast('PDF downloaded ✓');
+    } catch(e) {
+      showToast('Error generating PDF');
+    }
+
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }
+
+  async function downloadPNG() {
+    const btn = document.getElementById('pngBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<div class="spinner"></div> Capturing...';
+    btn.disabled = true;
+
+    try {
+      const el = document.getElementById('s' + current);
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#0A1628', useCORS: true, logging: false });
+      const link = document.createElement('a');
+      link.download = 'AdSmart-IntentWave-Slide' + current + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('Slide ' + current + ' saved as PNG ✓');
+    } catch(e) {
+      showToast('Error capturing slide');
+    }
+
+    btn.innerHTML = orig;
+    btn.disabled = false;
   }
 </script>
 </body>
