@@ -214,7 +214,7 @@ p { font-size: clamp(12px, 1.4vw, 14px); color: rgba(255,255,255,0.72); line-hei
   gap: 5px;
   background: transparent;
   border: none;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.6);
   font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -240,6 +240,31 @@ p { font-size: clamp(12px, 1.4vw, 14px); color: rgba(255,255,255,0.72); line-hei
   opacity: 0; transition: opacity 0.3s; pointer-events: none;
 }
 .toast.show { opacity: 1; }
+
+@media (max-width: 700px) {
+  .fab-bar {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    background: rgba(10,22,40,0.6);
+    border-radius: 10px;
+    padding: 10px 12px;
+    order: 99;
+    margin-top: 4px;
+  }
+  .fab-btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 11px;
+    padding: 8px 6px;
+    color: #F97316;
+    border: 1px solid rgba(249,115,22,0.25);
+    border-radius: 8px;
+  }
+  body { padding-bottom: 24px; }
+}
 
 /* PRINT */
 @media print {
@@ -491,7 +516,7 @@ p { font-size: clamp(12px, 1.4vw, 14px); color: rgba(255,255,255,0.72); line-hei
   <div class="bottom-bar"></div>
 </div>
 
-<!-- FLOATING ACTION BAR -->
+<!-- ACTION BAR — fixed on desktop, inline on mobile -->
 <div class="fab-bar">
   <button class="fab-btn" onclick="copyLink()">
     <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
